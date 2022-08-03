@@ -6,10 +6,12 @@ const userRouter = require('./ROUTERS/UserRouter')
 const postRouter = require('./ROUTERS/PostRoute')
 const mongoose = require('mongoose')
 var MONGODB_URI = 'mongodb+srv://SHIBAM:Shibam%402000@cluster0.kg8r2.mongodb.net/test'
+var cors = require('cors')
 
 // app.get("/", (req, res) => {
 //     res.send("Hellow World")
 // });
+app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: false }))
 

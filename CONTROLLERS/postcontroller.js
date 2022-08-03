@@ -1,5 +1,7 @@
 const Post = require('../MODELS/postModel')
 const User = require('../MODELS/usermodel')
+const Image = require('../MODELS/imageModel')
+const Response = require('../MODELS/responsemodel')
 const axios = require("axios");
 const FormData = require('form-data');
 
@@ -58,7 +60,7 @@ exports.deletePost = async (req,res)=>{
 
 exports.updatePost = async (req,res)=>{
     try {
-        var ddd = Post.findByIdAndUpdate(req.body.id,req.body.update)
+        var ddd = await Post.findByIdAndUpdate(req.body.id,req.body.update)
         res.status(200).json({
             success: true,
             error: null
@@ -70,6 +72,77 @@ exports.updatePost = async (req,res)=>{
         })
     }
 }
+
+exports.CreateImage = async (req,res)=>{
+    try {
+        var ddd = await Image.create(req.body);
+        res.status(200).json({
+            success: true,
+            error: null
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: true,
+            error: error
+        })
+    }
+}
+
+exports.getImages = async (req,res)=>{
+    console.log("hi")
+    try {
+        var ddd = await Image.find({}).sort({ dateofcreation: 'desc'}).exec();
+        res.send(ddd)
+    } catch (error) {
+        res.status(400).json({
+            success: true,
+            error: error
+        })
+    }
+}
+
+exports.deleteImage = async (req,res)=>{
+    try {
+        var ddd = await Image.findByIdAndDelete(req.body.id)
+        res.status(200).json({
+            success: true,
+            error: null
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: true,
+            error: error
+        })
+    }
+}
+
+exports.createresponse = async(req,res)=>{
+    try {
+        var ddd = await Response.create(req.body)
+        res.status(200).json({
+            success: true,
+            error: null
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: true,
+            error: error
+        })
+    }
+}
+
+exports.getResponses = async(req,res)=>{
+    try {
+        var ddd = await Response.find({}).sort({ dateofcreation: 'desc'}).exec();
+        res.send(ddd)
+    } catch (error) {
+        res.status(400).json({
+            success: true,
+            error: error
+        })
+    }
+}
+
 
 // exports.Cazzapost = async (req,res) =>{
 //     var user = await User.findById(req.body.id)
